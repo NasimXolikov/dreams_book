@@ -1,20 +1,30 @@
 * {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
 }
 body {
   margin: 0px;
   padding: 0px;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 .first-text {
   width: 100%;
   text-align: center;
   height: 30px;
   color: #084680;
-  font-size: 30px;
-  margin-bottom: 50px;
+  font-size: 2vw;
+  margin-bottom: 5vh;
   margin-top: 25px;
   font-weight: bold;
+}
+.wrap {
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
 }
 .app-cont {
   width: 100%;
@@ -23,49 +33,90 @@ body {
   background-position: top;
   margin: 0px;
   padding: 0px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .nav_panel {
   background-color: white;
 }
-h1 {
-  margin: 0 auto;
-  color: #084680;
-  margin-top: 5px;
-}
 .avatar-cont {
-  margin-top: 15px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
+}
+.avatar-cont img {
+  width: 35%;
 }
 .avatar-cont p {
-  font-size: 20px;
+  font-size: 1.5vw;
   font-weight: bold;
   margin-left: 20px;
 }
 .add_task {
   display: block;
-  width: 200px;
-  height: 50px;
+  width: 75%;
+  height: 7vh;
   margin: 0 auto;
-  margin-top: 40px;
+  margin-top: 4vh;
   margin-bottom: 50px;
   color: white;
   background-color: #0080FF;
   border: 1px solid black;
   border-radius: 50px;
   font-weight: 600;
-  font-size: 20px;
-  -webkit-transition: 100ms ease;
+  font-size: 1.5vw;
   transition: 100ms ease;
 }
 .accordion_btn {
-  font-size: 25px;
+  font-size: 1.5vw;
   font-weight: 600;
+}
+.hello-block {
+  width: 100%;
+  background-color: white;
+  height: 5vh;
+  margin-top: 10vh;
+  margin-bottom: 2.5vh;
+  border-radius: 25px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 1vw;
+}
+.hello-text {
+  font-size: 1.25vw;
+  font-weight: bold;
+}
+.first-block {
+  width: 100%;
+  background-color: white;
+  height: 75vh;
+  border-radius: 15px;
+  padding-top: 4vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+.icon-UpandDown {
+  width: 1.25vw;
+  margin-left: 1vw ;
+}
+.today-block {
+  width: 100%;
+  height: 5vh;
+  display: flex;
+  justify-content: space-between;
+}
+.today-block {
+  font-size: 1.5vw;
+  font-weight: 600;
+  color: #0080FF;
+}
+.today-circle {
+  width: 30px;
+  height: 30px;
+  font-size: 70%;
+  border-radius: 360px;
+  background-color: #C3C3C3;
+  color: white;
+  border: none;
 }
