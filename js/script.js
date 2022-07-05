@@ -12,15 +12,17 @@ $(document).ready(function () {
     let closeSmallModal = $('.close_small_modal');
 
 
-
     //vanilla js variales
     let changeFirstInp = document.querySelector('.modal_text_title');
+    let asks_type_main_cont = document.querySelectorAll('.asks_type_main');
+    let btn_add_spisok = document.querySelector('.btn_add_spisok');
 
 
 
 
     /// open modal code
     btnAddTask.click(function () {
+
         pop_up.removeClass('pop_up').addClass('pop_up_active');
         pop_up_body.removeClass('pop_up_body').addClass('pop_up_body_active');
         pop_up_content_layer_active.removeClass('pop_up_content_layer').addClass('pop_up_content_layer_active');
@@ -30,29 +32,51 @@ $(document).ready(function () {
 
         /// close modal code
         closeModal.click(function () {
+
             pop_up.removeClass('pop_up_active').addClass('pop_up');
             pop_up_body.removeClass('pop_up_body_active').addClass('pop_up_body');
             pop_up_content_layer_active.removeClass('pop_up_content_layer_active').addClass('pop_up_content_layer');
+
         });
+
     });
 
 
 
     /////Open small modal
     modal_task_type_info.click(function () {
+        add_task_type_status();
+
         task_type_modal_cont.removeClass('task_type_modal_cont').addClass('task_type_modal_cont_active');
         zatemnitel.removeClass('zatemnitel').addClass('zatemnitel_active');
     })
 
-    closeSmallModal.click(function () {
-        task_type_modal_cont.removeClass('task_type_modal_cont_active').addClass('task_type_modal_cont');
-        zatemnitel.removeClass('zatemnitel_active').addClass('zatemnitel');
-    })
 
+    //////function Сравнение и вставление активного статуса в тип задач
+    function add_task_type_status() {
+        //     alert(asks_type_main_cont[1].textContent.trim())
+        // alert(modal_task_type_info.text().trim())
+
+        for (let i = 0; i < asks_type_main_cont.length; i++) {
+            if (asks_type_main_cont[i].textContent.trim() == modal_task_type_info.text().trim() && asks_type_main_cont[i].outerHTML.indexOf(`<div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>`) == -1) {
+                asks_type_main_cont[i].innerHTML = `${asks_type_main_cont[i].outerHTML} <div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>`
+
+            } else if (asks_type_main_cont[i].textContent.trim() !== modal_task_type_info.text().trim()) {
+                let changeHTML = `${asks_type_main_cont[i].outerHTML.replace('<div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>', '')}`;
+                asks_type_main_cont[i].innerHTML = `${changeHTML}`
+            }
+
+            console.log(asks_type_main_cont[1])
+        }
+
+    }
 
 
     /////close small modal
 
+    closeSmallModal.click(function () {
+        closeSmallModall();
+    })
 
 
     ////////////ivent on input first title
@@ -76,6 +100,44 @@ $(document).ready(function () {
         }
     }
 
+
+    ////Active element of small modal
+
+    asks_type_main_cont.forEach(function (item) {
+        item.addEventListener('click', function () {
+            // close small modal on click to element
+            modal_task_type_info.text(item.textContent)
+            closeSmallModall();
+        })
+    });
+
+    ///// add new spisok
+    function addSpisok() {
+        btn_add_spisok.addEventListener('click', function (event) {
+            let addSpisokInpVal = document.getElementById('inp_add_spisok').value;
+            event.preventDefault();
+
+            if (addSpisokInpVal.trim() != '') {
+                console.log('text have')
+            } else (console.log('no'))
+        })
+
+    }
+
+    addSpisok();
+
+
+
+
+
+    /////close small modal function
+
+    function closeSmallModall() {
+        task_type_modal_cont.removeClass('task_type_modal_cont_active').addClass('task_type_modal_cont');
+        zatemnitel.removeClass('zatemnitel_active').addClass('zatemnitel');
+    }
+
+
 });
 
 
@@ -89,5 +151,7 @@ $(document).ready(function () {
 
 
 
+
+delete localStorage["Ключ"]
 
 
