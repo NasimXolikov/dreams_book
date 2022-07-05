@@ -111,23 +111,54 @@ $(document).ready(function () {
         })
     });
 
+
+
+
     ///// add new spisok
+    function getSpisokObj() {
+        const spisokItemsObject = {
+            0: 'Личный',
+            1: 'Работа',
+        }
+        return spisokItemsObject
+    }
+    let callObj = getSpisokObj()
+
+
     function addSpisok() {
+
         btn_add_spisok.addEventListener('click', function (event) {
+            let countOfObj = Object.keys(callObj).length
             let addSpisokInpVal = document.getElementById('inp_add_spisok').value;
             event.preventDefault();
 
             if (addSpisokInpVal.trim() != '') {
-                console.log('text have')
-            } else (console.log('no'))
+                callObj[countOfObj] = `${addSpisokInpVal}`;
+                document.getElementById('inp_add_spisok').value = '';
+                addSpisokItem()
+                // alert(Object.keys(callObj).length)
+            }
+
         })
 
     }
-
     addSpisok();
 
 
 
+    ////add new items of spisok
+    let spisokMainCont = document.querySelector('.spisok_main_cont')
+
+    for (let key in callObj) {
+        spisokMainCont.innerHTML += ` <div class="spisok_type_main">${callObj[key]}</div>                                                            <div class="under-line"></div>
+                                          <div class="under-line"></div>`;
+    }
+
+    function addSpisokItem() {
+            spisokMainCont.innerHTML += ` <div class="spisok_type_main">${callObj[Object.keys(callObj).length-1]}</div>                                                            <div class="under-line"></div>
+                                                <div class="under-line"></div>`;
+       
+    }
 
 
     /////close small modal function
@@ -152,6 +183,5 @@ $(document).ready(function () {
 
 
 
-delete localStorage["Ключ"]
 
 
