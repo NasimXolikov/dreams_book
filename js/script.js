@@ -14,7 +14,6 @@ $(document).ready(function () {
 
     //vanilla js variales
     let changeFirstInp = document.querySelector('.modal_text_title');
-    let asks_type_main_cont = document.querySelectorAll('.asks_type_main');
     let btn_add_spisok = document.querySelector('.btn_add_spisok');
 
 
@@ -43,40 +42,9 @@ $(document).ready(function () {
 
 
 
-    /////Open small modal
-    modal_task_type_info.click(function () {
-        add_task_type_status();
-
-        task_type_modal_cont.removeClass('task_type_modal_cont').addClass('task_type_modal_cont_active');
-        zatemnitel.removeClass('zatemnitel').addClass('zatemnitel_active');
-    })
 
 
-    //////function Сравнение и вставление активного статуса в тип задач
-    function add_task_type_status() {
-        //     alert(asks_type_main_cont[1].textContent.trim())
-        // alert(modal_task_type_info.text().trim())
 
-        for (let i = 0; i < asks_type_main_cont.length; i++) {
-            if (asks_type_main_cont[i].textContent.trim() == modal_task_type_info.text().trim() && asks_type_main_cont[i].outerHTML.indexOf(`<div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>`) == -1) {
-                asks_type_main_cont[i].innerHTML = `${asks_type_main_cont[i].outerHTML} <div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>`
-
-            } else if (asks_type_main_cont[i].textContent.trim() !== modal_task_type_info.text().trim()) {
-                let changeHTML = `${asks_type_main_cont[i].outerHTML.replace('<div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>', '')}`;
-                asks_type_main_cont[i].innerHTML = `${changeHTML}`
-            }
-
-            console.log(asks_type_main_cont[1])
-        }
-
-    }
-
-
-    /////close small modal
-
-    closeSmallModal.click(function () {
-        closeSmallModall();
-    })
 
 
     ////////////ivent on input first title
@@ -101,6 +69,187 @@ $(document).ready(function () {
     }
 
 
+
+
+    /// add new spisok
+    function getSpisokObj() {
+        const spisokItemsObject = {
+            0: 'Личный',
+            1: 'Работа',
+            2: 'Учеба',
+
+        }
+        return spisokItemsObject
+    }
+    let callObj = getSpisokObj();
+
+
+
+    const arrOfObj = [];
+    function arrOfObjs() {
+        for (let key in callObj) {
+            arrOfObj.push(callObj[key])
+        }
+
+    }
+    arrOfObjs();
+
+
+    let spisokMainCont = document.querySelector('.spisok_main_cont')
+
+    for (let key in callObj) {
+        spisokMainCont.innerHTML += ` <div class="spisok_type_main">${callObj[key]}</div><div class="under-line"></div>
+                                              <div class="under-line"></div>`;
+    }
+
+    let modalMainCont = document.querySelector('.asks_type_main_cont');
+
+    for (let key in callObj) {
+        modalMainCont.innerHTML += ` <div class="asks_type_main">${callObj[key]}</div><div class="under-line"></div>
+                                              <div class="under-line"></div>`;
+    }
+
+
+
+
+    // add items
+
+
+    const render = () => {
+        let listContent = document.querySelector('.spisok_main_cont');
+        let SmallModalContent = document.querySelector('.asks_type_main_cont');
+        listContent.innerHTML = '';
+        SmallModalContent.innerHTML = '';
+
+
+
+        for (let item of arrOfObj) {
+            let div = document.createElement("div");
+            let lineDiv = document.createElement("div");
+            let div2 = document.createElement("div");
+            let lineDiv2 = document.createElement("div");
+            div.className = 'spisok_type_main';
+            lineDiv.className = 'under-line';
+
+            div2.className = 'asks_type_main';
+            lineDiv2.className = 'under-line';
+
+            div.textContent = item;
+            div2.textContent = item;
+            listContent.append(div);
+            listContent.append(lineDiv);
+
+            SmallModalContent.append(div2);
+            SmallModalContent.append(lineDiv2);
+
+        }
+
+    };
+
+    const btnAddSpisok = document.querySelector('.btn_add_spisok');
+
+    btnAddSpisok.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        let input = document.querySelector('#inp_add_spisok');
+        let countOfObj = Object.keys(callObj).length
+
+        if (input.value.length > 0 && !arrOfObj.includes(input.value)) {
+            arrOfObj.push(input.value);
+            render();
+            callObj[countOfObj] = input.value;
+            console.log(callObj)
+            input.value = '';
+
+        }
+
+    });
+
+
+
+    const openSmallModal = document.querySelector('.modal_task_type_info');
+
+    openSmallModal.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        let input = document.querySelector('#inp_add_spisok');
+        let countOfObj = Object.keys(callObj).length
+
+        if (input.value.length > 0 && !arrOfObj.includes(input.value)) {
+            arrOfObj.push(input.value);
+            render();
+            callObj[countOfObj] = input.value;
+            console.log(callObj)
+            input.value = '';
+
+        }
+
+    });
+
+
+
+
+
+    /////Open small modal
+    modal_task_type_info.click(function () {
+        add_task_type_status();
+
+        task_type_modal_cont.removeClass('task_type_modal_cont').addClass('task_type_modal_cont_active');
+        zatemnitel.removeClass('zatemnitel').addClass('zatemnitel_active');
+    })
+
+
+
+    /////close small modal
+
+    closeSmallModal.click(function () {
+        closeSmallModall();
+    })
+
+
+
+
+
+    //////function Сравнение и вставление активного статуса в тип задач
+
+
+    let asks_type_main_cont = document.querySelectorAll('.asks_type_main');
+    console.log(asks_type_main_cont)
+    function add_task_type_status() {
+
+        for (let i = 0; i < asks_type_main_cont.length; i++) {
+            if (asks_type_main_cont[i].textContent.trim() == modal_task_type_info.text().trim() && asks_type_main_cont[i].outerHTML.indexOf(`<div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>`) == -1) {
+                asks_type_main_cont[i].innerHTML = `${asks_type_main_cont[i].outerHTML} <div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>`
+
+            } else if (asks_type_main_cont[i].textContent.trim() !== modal_task_type_info.text().trim()) {
+                let changeHTML = `${asks_type_main_cont[i].outerHTML.replace('<div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>', '')}`;
+                asks_type_main_cont[i].innerHTML = `${changeHTML}`
+            }
+
+        }
+        // let SmallModalContent = document.querySelector('.asks_type_main_cont');
+
+        // for (let item of arrOfObj) {
+        //     let div2 = document.createElement("div");
+        //     let lineDiv2 = document.createElement("div");
+        //     div2.className = 'asks_type_main';
+        //     lineDiv2.className = 'under-line';
+        //     div2.textContent = item;
+
+        //     SmallModalContent.append(div2);
+        //     SmallModalContent.append(lineDiv2);
+        //     console.log(modal_task_type_info.text().trim())
+        //     if (div2.textContent == modal_task_type_info.text().trim()){
+        //         console.log(div2)
+
+        //     }
+
+        // }
+
+
+    }
+
+
     ////Active element of small modal
 
     asks_type_main_cont.forEach(function (item) {
@@ -112,75 +261,20 @@ $(document).ready(function () {
     });
 
 
-
-
-    ///// add new spisok
-    function getSpisokObj() {
-        const spisokItemsObject = {
-            0: 'Личный',
-            1: 'Работа',
-        }
-        return spisokItemsObject
-    }
-    let callObj = getSpisokObj()
-
-
-    function addSpisok() {
-
-        btn_add_spisok.addEventListener('click', function (event) {
-            let countOfObj = Object.keys(callObj).length
-            let addSpisokInpVal = document.getElementById('inp_add_spisok').value;
-            event.preventDefault();
-
-            if (addSpisokInpVal.trim() != '') {
-                callObj[countOfObj] = `${addSpisokInpVal}`;
-                document.getElementById('inp_add_spisok').value = '';
-                addSpisokItem()
-                // alert(Object.keys(callObj).length)
-            }
-
-        })
-
-    }
-    addSpisok();
-
-
-
-    ////add new items of spisok
-    let spisokMainCont = document.querySelector('.spisok_main_cont')
-
-    for (let key in callObj) {
-        spisokMainCont.innerHTML += ` <div class="spisok_type_main">${callObj[key]}</div>                                                            <div class="under-line"></div>
-                                          <div class="under-line"></div>`;
-    }
-
-    function addSpisokItem() {
-            spisokMainCont.innerHTML += ` <div class="spisok_type_main">${callObj[Object.keys(callObj).length-1]}</div>                                                            <div class="under-line"></div>
-                                                <div class="under-line"></div>`;
-       
-    }
-
-
-    /////close small modal function
-
+    ///////////functions  closeSmallModall
     function closeSmallModall() {
         task_type_modal_cont.removeClass('task_type_modal_cont_active').addClass('task_type_modal_cont');
         zatemnitel.removeClass('zatemnitel_active').addClass('zatemnitel');
     }
 
 
+
+
+
+
+
+
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 
