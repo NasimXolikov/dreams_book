@@ -113,11 +113,13 @@ $(document).ready(function () {
 
 
     // add items
+//                                                      <i class="fa fa-trash" aria-hidden="true"></i>
 
 
     const render = () => {
         let listContent = document.querySelector('.spisok_main_cont');
         let SmallModalContent = document.querySelector('.asks_type_main_cont');
+
         listContent.innerHTML = '';
         SmallModalContent.innerHTML = '';
 
@@ -126,10 +128,14 @@ $(document).ready(function () {
         for (let item of arrOfObj) {
             let div = document.createElement("div");
             let lineDiv = document.createElement("div");
+            let delIcon = document.createElement('i')
+
             let div2 = document.createElement("div");
             let lineDiv2 = document.createElement("div");
             div.className = 'spisok_type_main';
             lineDiv.className = 'under-line';
+            delIcon.className='fa fa-trash'
+            delIcon.setAttribute('aria-hidden','true')
 
             div2.className = 'asks_type_main';
             lineDiv2.className = 'under-line';
@@ -137,6 +143,7 @@ $(document).ready(function () {
             div.textContent = item;
             div2.textContent = item;
             listContent.append(div);
+            div.append(delIcon)
             listContent.append(lineDiv);
 
             SmallModalContent.append(div2);
@@ -158,7 +165,6 @@ $(document).ready(function () {
             arrOfObj.push(input.value);
             render();
             callObj[countOfObj] = input.value;
-            console.log(callObj)
             input.value = '';
 
         }
@@ -213,10 +219,9 @@ $(document).ready(function () {
     //////function Сравнение и вставление активного статуса в тип задач
 
 
-    let asks_type_main_cont = document.querySelectorAll('.asks_type_main');
-    console.log(asks_type_main_cont)
     function add_task_type_status() {
-
+        let asks_type_main_cont = document.querySelectorAll('.asks_type_main');
+        console.log(asks_type_main_cont)
         for (let i = 0; i < asks_type_main_cont.length; i++) {
             if (asks_type_main_cont[i].textContent.trim() == modal_task_type_info.text().trim() && asks_type_main_cont[i].outerHTML.indexOf(`<div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>`) == -1) {
                 asks_type_main_cont[i].innerHTML = `${asks_type_main_cont[i].outerHTML} <div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>`
@@ -227,6 +232,18 @@ $(document).ready(function () {
             }
 
         }
+
+
+        ////Active element of small modal
+
+        asks_type_main_cont.forEach(function (item) {
+            item.addEventListener('click', function () {
+                // close small modal on click to element
+                modal_task_type_info.text(item.textContent)
+                closeSmallModall();
+            })
+        });
+
         // let SmallModalContent = document.querySelector('.asks_type_main_cont');
 
         // for (let item of arrOfObj) {
@@ -250,15 +267,6 @@ $(document).ready(function () {
     }
 
 
-    ////Active element of small modal
-
-    asks_type_main_cont.forEach(function (item) {
-        item.addEventListener('click', function () {
-            // close small modal on click to element
-            modal_task_type_info.text(item.textContent)
-            closeSmallModall();
-        })
-    });
 
 
     ///////////functions  closeSmallModall

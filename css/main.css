@@ -514,6 +514,7 @@ body {
   width: 100%;
   height: 7.5vh;
   text-align: left;
+  padding-right: 1vw;
   cursor: pointer;
 }
 .asks_type_main:hover {
@@ -526,7 +527,7 @@ body {
 }
 .asks_type_main_cont {
   width: 100%;
-  height: 40vh;
+  height: 50vh;
   overflow: scroll;
 }
 .asks_type_main_icon {
@@ -585,7 +586,7 @@ i {
 }
 .spisok_main_cont {
   width: 100%;
-  height: 40vh;
+  height: 50vh;
   overflow: scroll;
   margin-top: 1vh;
 }
@@ -602,6 +603,7 @@ i {
   width: 100%;
   height: 7.5vh;
   text-align: left;
+  padding-right: 1vw;
   cursor: pointer;
 }
 .spisok_type_main:hover {
