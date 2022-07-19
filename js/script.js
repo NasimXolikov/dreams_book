@@ -112,14 +112,16 @@ $(document).ready(function () {
 
 
 
+
+
     // add items
-//                                                      <i class="fa fa-trash" aria-hidden="true"></i>
+    //                                                      <i class="fa fa-trash" aria-hidden="true"></i>
 
 
     const render = () => {
         let listContent = document.querySelector('.spisok_main_cont');
         let SmallModalContent = document.querySelector('.asks_type_main_cont');
-
+        let numeration = 0;
         listContent.innerHTML = '';
         SmallModalContent.innerHTML = '';
 
@@ -134,12 +136,13 @@ $(document).ready(function () {
             let lineDiv2 = document.createElement("div");
             div.className = 'spisok_type_main';
             lineDiv.className = 'under-line';
-            delIcon.className='fa fa-trash'
-            delIcon.setAttribute('aria-hidden','true')
+            delIcon.className = 'fa fa-trash'
+            delIcon.setAttribute('aria-hidden', 'true')
 
             div2.className = 'asks_type_main';
             lineDiv2.className = 'under-line';
 
+            div.dataset.numeration = numeration++;
             div.textContent = item;
             div2.textContent = item;
             listContent.append(div);
@@ -150,12 +153,28 @@ $(document).ready(function () {
             SmallModalContent.append(lineDiv2);
 
         }
-
     };
+    render();
+
+
+
+    let del = document.querySelectorAll('.fa-trash');
+    let spisok_type_main=document.querySelectorAll('.spisok_type_main')
+
+    del.forEach((item) => {
+        item.addEventListener('click', () =>{
+            arrOfObj.splice(item.parentNode.dataset.numeration,1)
+            render()
+
+        })
+    })
+
+
+
 
     const btnAddSpisok = document.querySelector('.btn_add_spisok');
 
-    btnAddSpisok.addEventListener('click', function (event) {
+    btnAddSpisok.addEventListener('click', function(event) {
         event.preventDefault();
 
         let input = document.querySelector('#inp_add_spisok');
@@ -166,7 +185,6 @@ $(document).ready(function () {
             render();
             callObj[countOfObj] = input.value;
             input.value = '';
-
         }
 
     });
@@ -198,6 +216,7 @@ $(document).ready(function () {
 
     /////Open small modal
     modal_task_type_info.click(function () {
+
         add_task_type_status();
 
         task_type_modal_cont.removeClass('task_type_modal_cont').addClass('task_type_modal_cont_active');
@@ -221,15 +240,15 @@ $(document).ready(function () {
 
     function add_task_type_status() {
         let asks_type_main_cont = document.querySelectorAll('.asks_type_main');
-        console.log(asks_type_main_cont)
         for (let i = 0; i < asks_type_main_cont.length; i++) {
-            if (asks_type_main_cont[i].textContent.trim() == modal_task_type_info.text().trim() && asks_type_main_cont[i].outerHTML.indexOf(`<div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>`) == -1) {
+            if (asks_type_main_cont[i].textContent.trim() == modal_task_type_info.text().trim()) {
                 asks_type_main_cont[i].innerHTML = `${asks_type_main_cont[i].outerHTML} <div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>`
 
             } else if (asks_type_main_cont[i].textContent.trim() !== modal_task_type_info.text().trim()) {
                 let changeHTML = `${asks_type_main_cont[i].outerHTML.replace('<div class="asks_type_main_icon"> <i class="fa fa-check" aria-hidden="true"></i></div>', '')}`;
                 asks_type_main_cont[i].innerHTML = `${changeHTML}`
             }
+
 
         }
 
@@ -243,6 +262,10 @@ $(document).ready(function () {
                 closeSmallModall();
             })
         });
+
+
+
+
 
         // let SmallModalContent = document.querySelector('.asks_type_main_cont');
 
